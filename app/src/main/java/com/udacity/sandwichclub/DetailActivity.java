@@ -57,35 +57,9 @@ public class DetailActivity extends AppCompatActivity {
             closeOnError();
             return;
         } else {
-            ArrayList<String> alsoKnownAsList = (ArrayList<String>) sandwich.getAlsoKnownAs();
-            for (int i = 0; i < alsoKnownAsList.size(); i++) {
-                String name = alsoKnownAsList.get(i);
-                name = name.replace("[","");
-                name = name.replace("]", "");
-                name = name.replace("\"", "");
-                if (i == alsoKnownAsList.size() - 1) {
-                    alsoKnownAs.append(name);
-                } else {
-                    alsoKnownAs.append(name + ", ");
-                }
-            }
-            placeOfOrigin.setText(sandwich.getPlaceOfOrigin());
-            ArrayList<String> ingredientsList = (ArrayList<String>) sandwich.getIngredients();
-            for (int j = 0; j < ingredientsList.size(); j++) {
-                String ingredient = ingredientsList.get(j);
-                ingredient = ingredient.replace("[", "");
-                ingredient = ingredient.replace("]", "");
-                ingredient = ingredient.replace("\"", "");
-                if (j == ingredientsList.size() - 1) {
-                    ingredients.append(ingredient);
-                } else {
-                    ingredients.append(ingredient + ", ");
-                }
-            }
-            description.setText(sandwich.getDescription());
+            populateUI(sandwich);
         }
 
-        populateUI();
         Picasso.with(this)
                 .load(sandwich.getImage())
                 .into(ingredientsIv);
@@ -98,7 +72,26 @@ public class DetailActivity extends AppCompatActivity {
         Toast.makeText(this, R.string.detail_error_message, Toast.LENGTH_SHORT).show();
     }
 
-    private void populateUI() {
-
+    private void populateUI(Sandwich sandwich) {
+        ArrayList<String> alsoKnownAsList = (ArrayList<String>) sandwich.getAlsoKnownAs();
+        for (int i = 0; i < alsoKnownAsList.size(); i++) {
+            String name = alsoKnownAsList.get(i);
+            if (i == alsoKnownAsList.size() - 1) {
+                alsoKnownAs.append(name);
+            } else {
+                alsoKnownAs.append(name + ", ");
+            }
+        }
+        placeOfOrigin.setText(sandwich.getPlaceOfOrigin());
+        ArrayList<String> ingredientsList = (ArrayList<String>) sandwich.getIngredients();
+        for (int j = 0; j < ingredientsList.size(); j++) {
+            String ingredient = ingredientsList.get(j);
+            if (j == ingredientsList.size() - 1) {
+                ingredients.append(ingredient);
+            } else {
+                ingredients.append(ingredient + ", ");
+            }
+        }
+        description.setText(sandwich.getDescription());
     }
 }
